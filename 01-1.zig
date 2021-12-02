@@ -4,10 +4,8 @@ const parser = @import("parser.zig");
 pub fn main() !void {
     const timer = try std.time.Timer.start();
 
-    const file = try std.fs.cwd().openFile("01-input1.txt", .{ .read = true });
-    defer file.close();
-
-    var it = parser.ParserIterator(5, '\n').init(file);
+    var it = try parser.ParserIterator(5, '\n').init("01-input1.txt");
+    defer it.close();
 
     var previous: u16 = 65535; // u16 max
     var num_increases: u16 = 0;

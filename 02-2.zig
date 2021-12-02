@@ -4,10 +4,8 @@ const parser = @import("parser.zig");
 pub fn main() !void {
     const timer = try std.time.Timer.start();
 
-    const file = try std.fs.cwd().openFile("02-input.txt", .{ .read = true });
-    defer file.close();
-
-    var it = parser.ParserIterator(10, '\n').init(f);
+    var it = try parser.ParserIterator(10, '\n').init("02-input.txt");
+    defer it.close();
 
     var horizontal: u32 = 0;
     var depth: u32 = 0;
