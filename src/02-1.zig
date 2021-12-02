@@ -4,12 +4,11 @@ const parser = @import("parser.zig");
 pub fn main() !void {
     const timer = try std.time.Timer.start();
 
-    var it = try parser.ParserIterator(10, '\n').init("02-input.txt");
+    var it = try parser.ParserIterator(10, '\n').init("../input/02.txt");
     defer it.close();
 
     var horizontal: u32 = 0;
     var depth: u32 = 0;
-    var aim: u32 = 0;
     while (try it.next()) |line| {
         var word_it = std.mem.split(u8, line, " ");
 
@@ -18,11 +17,10 @@ pub fn main() !void {
 
         if (std.mem.eql(u8, word, "forward")) {
             horizontal += number;
-            depth += aim * number;
         } else if (std.mem.eql(u8, word, "up")) {
-            aim -= number;
+            depth -= number;
         } else if (std.mem.eql(u8, word, "down")) {
-            aim += number;
+            depth += number;
         }
     }
 

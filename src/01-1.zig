@@ -4,7 +4,7 @@ const parser = @import("parser.zig");
 pub fn main() !void {
     const timer = try std.time.Timer.start();
 
-    var it = try parser.ParserIterator(5, '\n').init("01-input1.txt");
+    var it = try parser.ParserIterator(5, '\n').init("../input/01.txt");
     defer it.close();
 
     var previous: u16 = 65535; // u16 max
