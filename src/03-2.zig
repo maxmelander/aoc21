@@ -2,19 +2,17 @@ const std = @import("std");
 const print = std.debug.print;
 const file = @embedFile("../input/03.txt");
 
-fn done(values: *[1000]bool) bool {
+fn getDoneIndex(values: *[1000]bool) ?usize {
     var num_true: usize = 0;
-    for (values) |value| {
-        if (value) num_true += 1;
-    }
-    return num_true == 1;
-}
-
-fn getDoneIndex(values: *[1000]bool) usize {
+    var index: usize = 0;
     for (values) |value, i| {
-        if (value) return i;
+        if (value) {
+            num_true += 1;
+            index = i;
+        }
+        if (num_true > 1) return null;
     }
-    return 0;
+    return index;
 }
 
 fn moreZero(active: [1000]bool, values: [1000]u12, index: u4) bool {
@@ -66,8 +64,7 @@ pub fn main() !void {
                 if (bit != gamma_bit) {
                     oxygen_indices[i] = false;
                 }
-                if (done(&oxygen_indices)) {
-                    const done_index = getDoneIndex(&oxygen_indices);
+                if (getDoneIndex(&oxygen_indices)) |done_index| {
                     oxygen_res = values[done_index];
                     oxygen_done = true;
                     break;
@@ -84,8 +81,7 @@ pub fn main() !void {
                 if (bit != magma_bit) {
                     magma_indices[i] = false;
                 }
-                if (done(&magma_indices)) {
-                    const done_index = getDoneIndex(&magma_indices);
+                if (getDoneIndex(&magma_indices)) |done_index| {
                     magma_res = values[done_index];
                     magma_done = true;
                     break;
