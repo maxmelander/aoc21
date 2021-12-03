@@ -1,16 +1,15 @@
 const std = @import("std");
-const parser = @import("parser.zig");
+const file = @embedFile("../input/02.txt");
 
 pub fn main() !void {
     const timer = try std.time.Timer.start();
 
-    var it = try parser.ParserIterator(10, '\n').init("../input/02.txt");
-    defer it.close();
+    var it = std.mem.tokenize(u8, file, "\n");
 
     var horizontal: u32 = 0;
     var depth: u32 = 0;
     var aim: u32 = 0;
-    while (try it.next()) |line| {
+    while (it.next()) |line| {
         var word_it = std.mem.split(u8, line, " ");
 
         const word = word_it.next().?;
