@@ -42,11 +42,9 @@ pub fn main() !void {
 
     // Oxygen generator
     var oxygen_indices: [1000]bool = .{true} ** 1000;
-    var oxygen_done: bool = false;
     var oxygen_res: u12 = 0;
 
     var magma_indices: [1000]bool = .{true} ** 1000;
-    var magma_done: bool = false;
     var magma_res: u12 = 0;
 
     // For every bit position, loop through our values and figure shit out
@@ -55,7 +53,7 @@ pub fn main() !void {
         const gamma_bit: u12 = if (moreZero(oxygen_indices, values, bit_index)) 0 else 1;
         const magma_bit: u12 = if (moreZero(magma_indices, values, bit_index)) 1 else 0;
 
-        if (!oxygen_done) {
+        if (oxygen_res == 0) {
          for (oxygen_indices) |o, i| {
             if (o) {
                 const value = values[i];
@@ -66,14 +64,13 @@ pub fn main() !void {
                 }
                 if (getDoneIndex(&oxygen_indices)) |done_index| {
                     oxygen_res = values[done_index];
-                    oxygen_done = true;
                     break;
                 }
             }
         }
         }
 
-        if (!magma_done) {
+        if (magma_res == 0) {
          for (magma_indices) |o, i| {
             if (o) {
                 const value = values[i];
@@ -83,13 +80,12 @@ pub fn main() !void {
                 }
                 if (getDoneIndex(&magma_indices)) |done_index| {
                     magma_res = values[done_index];
-                    magma_done = true;
                     break;
                 }
             }
         }
         }
-        if (magma_done and oxygen_done) {
+        if (magma_res != 0 and oxygen_res != 0) {
             const time: u64 = timer.read();
             std.debug.print("time: {}\n", .{time});
             print("Done {} {}\n", .{oxygen_res, magma_res});
