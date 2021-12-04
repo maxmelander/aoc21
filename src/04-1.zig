@@ -13,10 +13,8 @@ pub const Board = struct {
 
     const Self = @This();
     pub fn mark(self: *Self, number: u8) ?usize {
-        var row: usize = 0;
-        while (row < 5) : (row += 1) {
-            var column: usize = 0;
-            while (column < 5) : (column += 1) {
+        var row: usize = 0; while (row < 5) : (row += 1) {
+            var column: usize = 0; while (column < 5) : (column += 1) {
                 if (self.data[row][column] == number) self.marks[row][column] = true;
                 if (self.check(row, column)) {
                     return self.getResult(number);
@@ -35,10 +33,8 @@ pub const Board = struct {
 
     fn getResult(self: *Self, lucky_number: u8) usize {
         var sum: usize = 0;
-        var row: usize = 0;
-        while (row < 5) : (row += 1) {
-            var column: usize = 0;
-            while (column < 5) : (column += 1) {
+        var row: usize = 0; while (row < 5) : (row += 1) {
+            var column: usize = 0; while (column < 5) : (column += 1) {
                 if (!self.marks[row][column]) {
                     sum += self.data[row][column];
                 }
@@ -57,10 +53,8 @@ pub fn main() !void {
     var boards: [100]Board = undefined;
 
     // Fill the boards
-    var board: usize = 0;
-    while (board < 100 )  : (board += 1) {
-        var row: usize = 0;
-        while (row < 5) : (row += 1) {
+    var board: usize = 0; while (board < 100 )  : (board += 1) {
+        var row: usize = 0; while (row < 5) : (row += 1) {
             var column_it = std.mem.tokenize(u8, it.next().?, " ");
             var column_i: usize = 0;
             while (column_it.next()) |column| : (column_i += 1) {

@@ -13,10 +13,8 @@ pub fn main() !void {
     var boards: [100]Board = undefined;
 
     // Fill the boards
-    var board: usize = 0;
-    while (board < 100 )  : (board += 1) {
-        var row: usize = 0;
-        while (row < 5) : (row += 1) {
+    var board: usize = 0; while (board < 100 )  : (board += 1) {
+        var row: usize = 0; while (row < 5) : (row += 1) {
             var column_it = std.mem.tokenize(u8, it.next().?, " ");
             var column_i: usize = 0;
             while (column_it.next()) |column| : (column_i += 1) {
