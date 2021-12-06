@@ -10,10 +10,9 @@ pub fn main() !void {
 
     var state: [9]u64 = .{0} ** 9;
 
-    var it = std.mem.tokenize(u8, file, ",");
+    var it = std.mem.tokenize(u8, file, ",\r\n");
     while (it.next()) |fish| {
-        const tf = std.mem.trimRight(u8, fish, "\r\n");
-        const v = try std.fmt.parseUnsigned(usize, tf, 10);
+        const v = try std.fmt.parseUnsigned(usize, fish, 10);
         state[v] += 1;
     }
 
